@@ -1,0 +1,22 @@
+
+ Air Quality Forecasting Summary
+
+ Best Overall Model (Air Quality)
+- Lowest RMSE on average: SARIMA wins across most pollutants.
+- Lowest MAE: SARIMA/XGBoost (depending on pollutant).
+- Lowest MAPE: SARIMA clearly outperforms Prophet and univariate XGBoost (MAPE < 1 in many cases).
+
+ Pollutant-by-Pollutant Highlights:
+
+| Pollutant | Best Model (RMSE)             | Best Model (MAPE) | Notes                                   |
+|-----------|-------------------------------|-------------------|-----------------------------------------|
+| PM2.5     | SARIMA (3.34)                 | SARIMA (0.23%)    | Prophet RMSE was 7.67 — much higher.    |
+| PM10      | SARIMA (1.15)                 | SARIMA (0.15%)    | Prophet lagged again here.              |
+| CO        | XGBoost (0.0241)              | XGBoost (0.07%)   | SARIMA and XGB univariate tied closely. |
+| NO2       | XGBoost (0.178)               | XGBoost (0.28%)   | XGB-Multivariate had high RMSE (3.92).  |
+| SO2       | XGBoost-Multivariate (0.6191) | XGBoost (0.099%)  | Prophet worst (RMSE: 12.09).            |
+| O3        | XGBoost (0.0022)              | XGBoost (0.06%)   | All models did well, but XGB best.      |
+
+ Univariate vs Multivariate XGBoost
+- Multivariate XGBoost improved RMSE for SO₂, but weakened for NO2 and CO.
+- For PM2.5 and PM10, multivariate was worse than univariate XGB.

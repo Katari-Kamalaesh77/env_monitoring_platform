@@ -1,0 +1,99 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Read the consolidated metrics summary
+file_path = r"D:\env_monitoring_platform\backend\weather_data_files\consolidated_weather_model_metrics_summary.csv"
+metrics_data = pd.read_csv(file_path)
+
+# Set up the plot style
+sns.set(style="whitegrid")
+
+# List of weather variables (pollutants)
+weather_variables = ['Max_Temperature', 'Min_Temperature', 'Average_Temperature']
+
+# Function to create bar plots
+def plot_model_comparison(data, variable):
+    # Filter the data for the specific variable (weather variable)
+    variable_data = data[data['Pollutant'] == variable]
+    
+    # Set up the plot
+    plt.figure(figsize=(10, 6))
+    
+    # Create a list of metrics to plot (RMSE, MAE, R2)
+    metrics = ['RMSE_Prophet', 'RMSE_SARIMA', 'RMSE_XGBoost', 'RMSE_XGBMulti']
+    
+    # Create bar plots for each metric
+    for i, metric in enumerate(metrics):
+        plt.bar(variable_data['Pollutant'], variable_data[metric], label=metric, alpha=0.7, width=0.2, position=i-2)
+    
+    # Add labels and title
+    plt.xlabel('Weather Variable', fontsize=14)
+    plt.ylabel('Metric Value', fontsize=14)
+    plt.title(f'Model Comparison for {variable}', fontsize=16)
+    
+    # Show legend
+    plt.legend(title='Metrics', bbox_to_anchor=(1.05, 1), loc='upper left')
+    
+    # Save the plot as a PNG file
+    plt.tight_layout()
+    plot_path = f"D:\\env_monitoring_platform\\backend\\weather_data_files\\plots\\{variable}_model_comparison.png"
+    plt.savefig(plot_path)
+    plt.close()
+    print(f"Plot saved to: {plot_path}")
+
+# Loop through weather variables to create plots
+for variable in weather_variables:
+    plot_model_comparison(metrics_data, variable)
+
+# Optional: To plot individual univariate metrics CSV files for each model
+def plot_univariate_model(metrics_file, variable):
+    # Read the univariate model file
+    model_metrics = pd.read_csv(metrics_file)
+    
+    # Filter data by variable
+    model_metrics = model_metrics[model_metrics['Pollutant'] == variable]
+    
+    # Set up the plot
+    plt.figure(figsize=(10, 6))
+    
+    # Bar plot for RMSE, MAE, R² for each model (Prophet, SARIMA, XGBoost)
+    models = ['Prophet', 'SARIMA', 'XGBoost']
+    for i, model in enumerate(models):
+        rmse = model_metrics[f'RMSE_{model}']
+        mae = model_metrics[f'MAE_{model}']
+        r2 = model_metrics[f'R²_{model}']
+        
+        # Bar plots for each model
+        plt.bar(f"{model}_RMSE", rmse, label=f"{model} RMSE", alpha=0.7, width=0.2, position=i)
+        plt.bar(f"{model}_MAE", mae, label=f"{model} MAE", alpha=0.7, width=0.2, position=i+0.2)
+        plt.bar(f"{model}_R²", r2, label=f"{model} R²", alpha=0.7, width=0.2, position=i-0.2)
+        
+    # Add labels and title
+    plt.xlabel('Model', fontsize=14)
+    plt.ylabel('Metric Value', fontsize=14)
+    plt.title(f'Metrics Comparison for {variable} (Univariate)', fontsize=16)
+    
+    # Show legend
+    plt.legend(title='Metrics', bbox_to_anchor=(1.05, 1), loc='upper left')
+    
+    # Save the plot as a PNG file
+    plt.tight_layout()
+    plot_path = f"D:\\env_monitoring_platform\\backend\\weather_data_files\\plots\\{variable}_univariate_model_comparison.png"
+    plt.savefig(plot_path)
+    plt.close()
+    print(f"Plot saved to: {plot_path}")
+
+# Paths for individual univariate metrics CSV files
+univariate_metrics_files = [
+    r"D:\env_monitoring_platform\backend\weather_data_files\weather_model_metrics_summary.csv",  # Example path
+    r"D:\env_monitoring_platform\backend\weather_data_files\sarima_outputs\sarima_metrics.csv",  # Example path
+    r"D:\env_monitoring_platform\backend\ml\xgboost_weather_metrics.csv"  # Example path
+]
+
+# Loop through univariate files and create individual plots
+for file in univariate_metrics_files:
+    for variable in weather_variables:
+        plot_univariate_model(file, variable)
+
+print("Plotting complete!")

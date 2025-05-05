@@ -1,0 +1,38 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
+# Set Seaborn style
+sns.set(style="whitegrid")
+
+# --- Load multivariate metrics ---
+csv_path = "xgb_multivariate_metrics.csv"
+df = pd.read_csv(csv_path)
+
+# --- Add Model column ---
+df['Model'] = 'XGBoost-Multivariate'
+
+# --- Output folder ---
+output_dir = "plots/bar_charts"
+os.makedirs(output_dir, exist_ok=True)
+
+# --- Define plot function ---
+def plot_metric_bar(df, metric, title):
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='Pollutant', y=metric, hue='Model', data=df, errorbar=None)
+    plt.title(title)
+    plt.xlabel('Pollutant')
+    plt.ylabel(metric)
+    plt.xticks(rotation=45)
+    plt.legend(title='Model')
+    plt.tight_layout()
+    output_path = os.path.join(output_dir, f"xgb_multivariate_{metric.lower()}_bar.png")
+    plt.savefig(output_path)
+    plt.close()
+    print(f"Saved: {output_path}")
+
+# --- Plot all metrics ---
+plot_metric_bar(df, 'RMSE', 'XGBoost Multivariate - RMSE by Pollutant')
+plot_metric_bar(df, 'MAE', 'XGBoost Multivariate - MAE by Pollutant')
+plot_metric_bar(df, 'MAPE', 'XGBoost Multivariate - MAPE by Pollutant')

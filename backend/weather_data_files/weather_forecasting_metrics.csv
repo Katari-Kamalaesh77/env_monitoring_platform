@@ -1,0 +1,10 @@
+Variable,Model,RMSE,MAE,MAPE,R²
+Max_Temperature,Prophet,4.6457,3.6628,inf,
+Min_Temperature,Prophet,4.0553,3.1876,inf,
+Average_Temperature,Prophet,3.9632,3.1165,inf,
+Max_Temperature,SARIMA,2.9516,2.2729,,
+Min_Temperature,SARIMA,2.5606,2.0223,,
+Average_Temperature,SARIMA,2.5095,1.9526,,
+Max_Temperature,XGBoost-Multivariate,3.48,2.6,,0.883
+Min_Temperature,XGBoost-Multivariate,2.78,2.05,,0.912
+Average_Temperature,XGBoost-Multivariate,2.79,2.0,,0.915

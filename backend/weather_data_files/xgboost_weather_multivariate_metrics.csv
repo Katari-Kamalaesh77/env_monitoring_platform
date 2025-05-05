@@ -1,0 +1,4 @@
+Variable,Model,RMSE,MAE,R²
+Max_Temperature,XGBoost-Multivariate,3.48,2.6,0.883
+Min_Temperature,XGBoost-Multivariate,2.78,2.05,0.912
+Average_Temperature,XGBoost-Multivariate,2.79,2.0,0.915

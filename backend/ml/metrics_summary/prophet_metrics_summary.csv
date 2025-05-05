@@ -1,0 +1,7 @@
+Variable,Model,RMSE,MAE,MAPE
+PM2.5,Prophet,7.67,6.74,100.91
+PM10,Prophet,5.18,4.36,59.23
+CO,Prophet,0.15,0.13,37.28
+NO2,Prophet,1.23,1.18,126.01
+SO2,Prophet,12.09,8.06,33.13
+O3,Prophet,0.01,0.01,37.35

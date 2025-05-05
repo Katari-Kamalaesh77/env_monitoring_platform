@@ -1,0 +1,4 @@
+Variable,Model,RMSE,MAE,MAPE
+Max_Temperature,Prophet,4.6457,3.6628,inf
+Min_Temperature,Prophet,4.0553,3.1876,inf
+Average_Temperature,Prophet,3.9632,3.1165,inf

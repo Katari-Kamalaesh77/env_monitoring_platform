@@ -1,0 +1,18 @@
+
+Weather Forecasting Summary
+
+Best Overall Model (Weather)
+- RMSE / MAE winner: XGBoost (Univariate) clearly beats Prophet and SARIMA for TMAX and TAVG.
+- R² winner: Multivariate XGBoost (R² ≈ 0.91–0.92)
+
+Variable-by-Variable Highlights:
+
+| Variable    |    Best RMSE   |         Best R²          |                               Notes                                      |
+|-------------|----------------|--------------------------|--------------------------------------------------------------------------|
+| TMAX        | XGBoost (1.83) | Multivariate XGB (0.883) |                      Prophet very poor here.                             |
+| TMIN        | SARIMA (2.56)  | Multivariate XGB (0.912) |                  SARIMA surprisingly close to XGB.                       |
+| TAVG        | XGBoost (1.77) | Multivariate XGB (0.915) | Prophet MAPE is `inf` — likely due to zero or near-zero values in denom. |
+
+Univariate vs Multivariate XGBoost
+- Multivariate performed consistently well in R² (≥0.88).
+- Univariate XGBoost still had lower RMSE in TMAX and TAVG — so both have strengths.
